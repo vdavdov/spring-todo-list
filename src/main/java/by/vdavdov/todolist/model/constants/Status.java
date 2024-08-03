@@ -1,4 +1,4 @@
-package by.vdavdov.todolist.constants;
+package by.vdavdov.todolist.model.constants;
 
 public enum Status {
     IN_PROGRESS,

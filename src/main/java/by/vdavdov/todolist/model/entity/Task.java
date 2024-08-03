@@ -1,6 +1,6 @@
-package by.vdavdov.todolist.domain.entity;
+package by.vdavdov.todolist.model.entity;
 
-import by.vdavdov.todolist.constants.Status;
+import by.vdavdov.todolist.model.constants.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,6 +12,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "task")
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +21,7 @@ public class Task {
     @Column(nullable = false, length = 100, name = "description")
     private String description;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     @Column(nullable = false, name = "status")
     private Status status;
 

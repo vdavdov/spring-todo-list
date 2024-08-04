@@ -2,14 +2,14 @@ package by.vdavdov.todolist.mapper;
 
 import by.vdavdov.todolist.model.dto.TaskTo;
 import by.vdavdov.todolist.model.entity.Task;
-import org.mapstruct.*;
-import org.mapstruct.factory.Mappers;
+import org.mapstruct.BeanMapping;
+import org.mapstruct.Mapper;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 
 
-@Mapper(componentModel = MappingConstants.ComponentModel.SPRING, uses = {TaskDtoMapper.class})
+@Mapper(componentModel = "spring")
 public interface TaskDtoMapper {
-    TaskDtoMapper MAPPER = Mappers.getMapper(TaskDtoMapper.class);
-
     Task toEntity(TaskTo taskDto);
 
     TaskTo toDto(Task task);

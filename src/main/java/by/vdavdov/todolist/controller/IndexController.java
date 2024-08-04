@@ -1,9 +1,11 @@
 package by.vdavdov.todolist.controller;
 
-import by.vdavdov.todolist.mapper.TaskDtoMapper;
 import by.vdavdov.todolist.model.dto.TaskTo;
+import by.vdavdov.todolist.model.entity.Task;
 import by.vdavdov.todolist.service.TaskService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,10 +21,13 @@ import java.util.List;
 public class IndexController {
     private final TaskService taskService;
 
-    @GetMapping(value = {"/index", "/tasks", "/"})
+    @GetMapping
     public String get(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size, Model model) {
+        Pageable pageable = PageRequest.of(page, size);
         List<TaskTo> tasks = taskService.getAll();
         model.addAttribute("tasks", tasks);
+        model.addAttribute("page", page);
+        model.addAttribute("size", size);
         return "index";
     }
 }

@@ -5,30 +5,39 @@ import by.vdavdov.todolist.model.dto.TaskTo;
 import by.vdavdov.todolist.model.entity.Task;
 import by.vdavdov.todolist.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 @Transactional
+@RequiredArgsConstructor
 public class TaskService {
     private final TaskRepository taskRepository;
+    private final TaskDtoMapper taskDtoMapper;
 
     public Task create(TaskTo taskTo) {
-        Task entity = TaskDtoMapper.MAPPER.toEntity(taskTo);
+        Task entity = taskDtoMapper.toEntity(taskTo);
         return taskRepository.save(entity);
     }
 
     public TaskTo getById(Long id) {
-        return TaskDtoMapper.MAPPER.toDto(taskRepository.findById(id).orElse(null));
+        return taskDtoMapper.toDto(taskRepository.findById(id).orElse(null));
+    }
+
+    public List<TaskTo> getAll(Pageable pageable) {
+        return taskRepository.findAll(pageable)
+                .stream()
+                .map(taskDtoMapper::toDto)
+                .toList();
     }
 
     public List<TaskTo> getAll() {
         return taskRepository.findAll()
                 .stream()
-                .map(TaskDtoMapper.MAPPER::toDto)
+                .map(taskDtoMapper::toDto)
                 .toList();
     }
 

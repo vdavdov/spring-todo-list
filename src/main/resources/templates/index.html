@@ -1,25 +1,57 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>TodoList</title>
+    <title>Todo List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-    <table>
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Description</th>
-            <th>Status</th>
+<h1 th:text="#{message.title}">Todo List</h1>
+
+<form th:action="@{/tasks}" th:object="${newTask}" method="post">
+    <label>
+        <input type="text" th:field="*{description}" placeholder="Введите задачу" required>
+    </label>
+    <label>
+        <select th:field="*{status}">
+            <option th:value="'IN_PROGRESS'" th:text="#{status.in_progress}">IN PROGRESS</option>
+            <option th:value="'DONE'" th:text="#{status.done}">DONE</option>
+            <option th:value="'PAUSED'" th:text="#{status.paused}">PAUSED</option>
+        </select>
+    </label>
+    <button type="submit" th:text="#{message.add}">Add</button>
+</form>
+
+<table>
+    <thead>
+    <tr>
+        <td>ID</td>
+        <td>Description</td>
+        <td>Status</td>
+    </tr>
+    </thead>
+    <tbody>
+        <tr th:each="task : ${tasks}">
+            <td th:text="${task.description}"></td>
+            <td th:text="${task.status}"></td>
+            <td><form th:action="@{/tasks/delete/{id}(id=${task.id})}" method="post" style="display:inline;">
+            <button type="submit" th:text="#{message.delete}">Delete</button>
+            </form>
+            </td>
         </tr>
-        </thead>
+    </tbody>
+</table>
 
-
-    </table>
-<span th:object="${tasks.first}"> </span>
+<div>
+    <span th:if="${currentPage > 0}">
+        <a th:href="@{/tasks(page=${currentPage - 1}, size=${size})}">Назад</a>
+    </span>
+    <span>Страница <span th:text="${currentPage + 1}">1</span> из <span th:text="${totalPages}">1</span></span>
+    <span th:if="${currentPage < totalPages - 1}">
+        <a th:href="@{/tasks(page=${currentPage + 1}, size=${size})}">Вперед</a>
+    </span>
+</div>
 
 </body>
 </html>

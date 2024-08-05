@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Task</title>
+</head>
+<body>
+<h1 th:text="#{message.title.edit}">Редактирование задачи</h1>
+
+<form th:action="@{/tasks/edit}" th:object="${task}" method="post">
+    <input type="hidden" th:field="*{id}" />
+
+    <label>
+        <span th:text="#{message.description1}">Описание:</span>
+        <input type="text" th:field="*{description}" required />
+    </label>
+
+    <label>
+        <span th:text="#{message.status1}">Статус:</span>
+        <select th:field="*{status}">
+            <option th:value="'IN_PROGRESS'" th:text="#{status.in_progress}" th:selected="${task.status == 'IN_PROGRESS'}"></option>
+            <option th:value="'DONE'" th:text="#{status.done}" th:selected="${task.status == 'DONE'}"></option>
+            <option th:value="'PAUSED'" th:text="#{status.paused}" th:selected="${task.status == 'PAUSED'}"></option>
+        </select>
+    </label>
+
+    <button type="submit" th:text="#{message.save}">Сохранить</button>
+</form>
+
+<br>
+<br>
+
+<a href="/tasks" th:text="#{message.back}">Back</a>
+</body>
+</html>

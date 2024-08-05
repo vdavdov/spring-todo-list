@@ -25,6 +25,11 @@ public class TaskService {
         return taskRepository.save(entity);
     }
 
+    public Task update(TaskTo taskTo) {
+        Task entity = taskDtoMapper.toEntity(taskTo);
+        return taskRepository.save(entity);
+    }
+
     public Page<Task> findPaginated(int pageNo, int pageSize) {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
         return taskRepository.findAll(pageable);

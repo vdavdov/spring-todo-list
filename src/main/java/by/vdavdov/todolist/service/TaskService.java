@@ -31,7 +31,7 @@ public class TaskService {
     }
 
     public Page<Task> findPaginated(int pageNo, int pageSize) {
-        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
         return taskRepository.findAll(pageable);
     }
 

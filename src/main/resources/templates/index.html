@@ -7,6 +7,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/js/scripts.js"></script> <!-- !!!! -->
+    <script>
+    function reloadPage() {
+        const currentPage = [[${currentPage}]];
+        size = document.getElementById('itemsPerPage').value;
+        window.location.href = `/tasks?page=${currentPage}&size=${size}`;
+    }
+    </script>
 </head>
 <body>
 <h1 th:text="#{message.title}">Todo List</h1>
@@ -56,13 +63,16 @@
 
 <div>
     <span th:if="${currentPage > 0}">
-        <a th:href="@{/tasks(page=${currentPage - 1}, size=${size})}">Назад</a>
+        <a th:href="@{/tasks(page=${currentPage - 1}, size=${size})}" th:text="#{message.back.back}">Назад</a>
     </span>
-    <span>Страница <span th:text="${currentPage + 1}">1</span> из <span th:text="${totalPages}">1</span></span>
+    <span th:text="#{message.page}">Страница <span th:text="${currentPage + 1}">1</span>
+        <span th:text="#{message.in}">из</span><span th:text="${totalPages}">1</span></span>
     <span th:if="${currentPage < totalPages - 1}">
-        <a th:href="@{/tasks(page=${currentPage + 1}, size=${size})}">Вперед</a>
+        <a th:href="@{/tasks(page=${currentPage + 1}, size=${size})}" th:text="#{message.forward}">Вперед</a>
     </span>
 </div>
+
+<br>
 
 <div>
     <label for="itemsPerPage" th:text="#{message.itemsPerPage}">Items per page:</label>
@@ -71,8 +81,15 @@
         <option value="10" th:selected="${size == 10}">10</option>
         <option value="20" th:selected="${size == 20}">20</option>
     </select>
-    <button onclick="reloadPage()">Reload</button>
+    <button onclick="reloadPage()" th:text="#{message.reload}">Reload</button>
 </div>
+
+<br>
+<br>
+<p th:text="#{message.language}">Язык: </p>
+<a th:href="@{/change-language/ru}">RU</a>
+<span> / </span>
+<a th:href="@{/change-language/eng}">ENG</a>
 
 </body>
 </html>

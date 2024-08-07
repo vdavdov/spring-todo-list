@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.LocaleResolver;
@@ -19,9 +20,10 @@ public class LanguageController {
     private final LocaleResolver localeResolver;
 
     @GetMapping("/change-language/{lang}")
-    public String changeLanguage(@RequestParam("lang") String language, HttpServletRequest request, HttpServletResponse response) {
+    public String changeLanguage(@PathVariable("lang") String language,
+                                 HttpServletRequest request,
+                                 HttpServletResponse response) {
         localeResolver.setLocale(request, response, new Locale(language));
         return "redirect:/tasks";
     }
-    //todo
 }

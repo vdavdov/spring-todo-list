@@ -4,7 +4,6 @@ import by.vdavdov.todolist.model.dto.TaskTo;
 import by.vdavdov.todolist.model.entity.Task;
 import by.vdavdov.todolist.service.TaskService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;

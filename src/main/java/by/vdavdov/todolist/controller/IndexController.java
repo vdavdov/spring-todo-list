@@ -32,19 +32,19 @@ public class IndexController {
         model.addAttribute("size", size);
         model.addAttribute("totalPages", taskService.findPaginated(page, size).getTotalPages());
 
-        return "index";
+        return "tasks";
     }
 
     @PostMapping("/tasks")
     public String post(@ModelAttribute TaskTo task, Model model) {
         taskService.create(task);
         model.addAttribute("newTask", task);
-        return "redirect:/index";
+        return "redirect:/tasks";
     }
 
     @PostMapping(value = "/delete/{id}")
-    public String delete(@PathVariable Long id, Model model) {
+    public String delete(@PathVariable Long id) {
         taskService.deleteById(id);
-        return "redirect:/index";
+        return "redirect:/tasks";
     }
 }

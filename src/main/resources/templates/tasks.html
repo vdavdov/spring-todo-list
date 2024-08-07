@@ -65,8 +65,8 @@
     <span th:if="${currentPage > 0}">
         <a th:href="@{/tasks(page=${currentPage - 1}, size=${size})}" th:text="#{message.back.back}">Назад</a>
     </span>
-    <span th:text="#{message.page}">Страница <span th:text="${currentPage + 1}">1</span>
-        <span th:text="#{message.in}">из</span><span th:text="${totalPages}">1</span></span>
+    <span th:text="#{message.page}">Страница</span> <span th:text="${currentPage+1}">1</span>
+        <span th:text="#{message.in}">из</span><span th:text="${totalPages}">1</span>
     <span th:if="${currentPage < totalPages - 1}">
         <a th:href="@{/tasks(page=${currentPage + 1}, size=${size})}" th:text="#{message.forward}">Вперед</a>
     </span>
